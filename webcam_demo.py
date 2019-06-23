@@ -14,6 +14,15 @@ parser.add_argument('--scale_factor', type=float, default=0.7125)
 parser.add_argument('--file', type=str, default=None, help="Optionally use a video file instead of a live camera")
 args = parser.parse_args()
 
+def gstreamer_pipeline (capture_width=1280, capture_height=720, display_width=1280, display_height=720, framerate=60, flip_method=2) :   
+    return ('nvarguscamerasrc ! ' 
+    'video/x-raw(memory:NVMM), '
+    'width=(int)%d, height=(int)%d, '
+    'format=(string)NV12, framerate=(fraction)%d/1 ! '
+    'nvvidconv flip-method=%d ! '
+    'video/x-raw, width=(int)%d, height=(int)%d, format=(string)BGRx ! '
+    'videoconvert ! '
+    'video/x-raw, format=(string)BGR ! appsink'  % (capture_width,capture_height,framerate,flip_method,display_width,display_height))
 
 def main():
     with tf.Session() as sess:
@@ -23,9 +32,9 @@ def main():
         if args.file is not None:
             cap = cv2.VideoCapture(args.file)
         else:
-            cap = cv2.VideoCapture(args.cam_id)
-        cap.set(3, args.cam_width)
-        cap.set(4, args.cam_height)
+            cap = cv2.VideoCapture(gstreamer_pipeline(flip_method=2), cv2.CAP_GSTREAMER)
+        #cap.set(3, args.cam_width)
+        #cap.set(4, args.cam_height)
 
         start = time.time()
         frame_count = 0
@@ -54,6 +63,9 @@ def main():
                 display_image, pose_scores, keypoint_scores, keypoint_coords,
                 min_pose_score=0.15, min_part_score=0.1)
 
+
+            cv2.namedWindow("posenet", cv2.WND_PROP_FULLSCREEN)
+            cv2.setWindowProperty("posenet", cv2.WND_PROP_FULLSCREEN,cv2.WINDOW_FULLSCREEN)
             cv2.imshow('posenet', overlay_image)
             frame_count += 1
             if cv2.waitKey(1) & 0xFF == ord('q'):
@@ -64,3 +76,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
