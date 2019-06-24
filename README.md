@@ -1,3 +1,23 @@
+A fork of rwightman's excellent work. Modified slightly to use the OpenCV/gstreaming capabilities preinstalled on the NVIDIA Jetson Nano.
+
+Requires:
+* Tensorflow (https://devtalk.nvidia.com/default/topic/1048776/official-tensorflow-for-jetson-nano-/)
+   * ``` sudo apt-get install python3-pip libhdf5-serial-dev hdf5-tool ```
+   * ```pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.5 --user --no-cache-dir```
+* Scipy (May require lapack/blas update prior to install)
+   * ```sudo apt-get update```
+   * ```sudo apt-get install -y build-essential libatlas-base-dev gfortran```
+   * ```pip3 install scipy```
+
+Does not require any updates to OpenCV versions provided in the standard Jetson Nano build.
+
+Performance increases might be observed by setting up a memory swapfile.
+
+
+
+
+Original ReadMe follows:
+
 ## PoseNet Python
 
 This repository contains a pure Python implementation (multi-pose only) of the Google TensorFlow.js Posenet model. For a (slightly faster) PyTorch implementation that followed from this, see (https://github.com/rwightman/posenet-pytorch)
