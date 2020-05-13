@@ -7,6 +7,8 @@ https://github.com/NVIDIA-AI-IOT/trt_pose
 
 
 
+## Posenet Jetson Nano ##
+
 A fork of rwightman's excellent work. Modified slightly to use the OpenCV/gstreaming capabilities preinstalled on the NVIDIA Jetson Nano.
 
 Requires:
