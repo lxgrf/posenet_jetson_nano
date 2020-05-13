@@ -1,3 +1,12 @@
+## OBSOLETE ##
+
+If you're looking to do pose estimation on the Jetson Nano, check out the official NVIDIA project for the job. I'll guarantee it's better optimised than this one!
+
+https://github.com/NVIDIA-AI-IOT/trt_pose
+
+
+
+
 A fork of rwightman's excellent work. Modified slightly to use the OpenCV/gstreaming capabilities preinstalled on the NVIDIA Jetson Nano.
 
 Requires:
